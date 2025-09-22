@@ -1,0 +1,50 @@
+char* solve(int n) {
+    typedef struct Node {
+        char* value;
+        int remainder;
+    } Node;
+
+    Node queue[100000];
+    int front = 0, rear = 0;
+    queue[rear].value = strdup("9");
+    queue[rear].remainder = 9 % n;
+    rear++;
+
+    bool* visited = calloc(n, sizeof(bool));
+    visited[9 % n] = true;
+
+    while (front < rear) {
+        Node current = queue[front++];
+        if (current.remainder == 0) {
+            char* result = strdup(current.value);
+            free(visited);
+            return result;
+        }
+        char* next0 = malloc(strlen(current.value) + 2);
+        sprintf(next0, "%s0", current.value);
+        int rem0 = (current.remainder * 10) % n;
+        if (!visited[rem0]) {
+            visited[rem0] = true;
+            queue[rear].value = next0;
+            queue[rear].remainder = rem0;
+            rear++;
+        } else {
+            free(next0);
+        }
+        char* next9 = malloc(strlen(current.value) + 2);
+        sprintf(next9, "%s9", current.value);
+        int rem9 = (current.remainder * 10 + 9) % n;
+        if (!visited[rem9]) {
+            visited[rem9] = true;
+            queue[rear].value = next9;
+            queue[rear].remainder = rem9;
+            rear++;
+        } else {
+            free(next9);
+        }
+
+        free(current.value);
+    }
+
+    return strdup("-1");
+}
