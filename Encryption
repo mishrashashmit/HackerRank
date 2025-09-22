@@ -1,0 +1,31 @@
+char* encryption(char* s) {
+    int len = strlen(s);
+    char* cleaned = malloc(len + 1);
+    int k = 0;
+    for (int i = 0; i < len; i++) {
+        if (s[i] != ' ') {
+            cleaned[k++] = s[i];
+        }
+    }
+    cleaned[k] = '\0';
+    int L = strlen(cleaned);
+    int rows = (int)floor(sqrt(L));
+    int cols = (int)ceil(sqrt(L));
+    if (rows * cols < L) rows++;
+    int max_output_len = L + cols + 1;
+    char* result = malloc(max_output_len);
+    int pos = 0;
+    for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < rows; r++) {
+            int idx = r * cols + c;
+            if (idx < L) {
+                result[pos++] = cleaned[idx];
+            }
+        }
+        result[pos++] = ' ';
+    }
+
+    result[pos - 1] = '\0';
+    free(cleaned);
+    return result;
+}
