@@ -1,0 +1,32 @@
+int* jimOrders(int orders_rows, int orders_columns, int** orders, int* result_count) {
+    typedef struct {
+        int delivery;
+        int id;
+    } Order;
+
+    Order* arr = malloc(orders_rows * sizeof(Order));
+
+    for (int i = 0; i < orders_rows; i++) {
+        arr[i].delivery = orders[i][0] + orders[i][1];
+        arr[i].id = i + 1;
+    }
+
+    int cmp(const void* a, const void* b) {
+        Order* o1 = (Order*)a;
+        Order* o2 = (Order*)b;
+        if (o1->delivery == o2->delivery)
+            return o1->id - o2->id;
+        return o1->delivery - o2->delivery;
+    }
+
+    qsort(arr, orders_rows, sizeof(Order), cmp);
+
+    *result_count = orders_rows;
+    int* result = malloc(orders_rows * sizeof(int));
+    for (int i = 0; i < orders_rows; i++) {
+        result[i] = arr[i].id;
+    }
+
+    free(arr);
+    return result;
+}
