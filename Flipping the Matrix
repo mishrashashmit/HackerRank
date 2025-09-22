@@ -1,0 +1,22 @@
+ int flippingMatrix(int matrix_rows, int matrix_columns, int** matrix) {
+    int n = matrix_rows / 2;
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int topLeft     = matrix[i][j];
+            int topRight    = matrix[i][matrix_columns - 1 - j];
+            int bottomLeft  = matrix[matrix_rows - 1 - i][j];
+            int bottomRight = matrix[matrix_rows - 1 - i][matrix_columns - 1 - j];
+
+            int maxVal = topLeft;
+            if (topRight > maxVal) maxVal = topRight;
+            if (bottomLeft > maxVal) maxVal = bottomLeft;
+            if (bottomRight > maxVal) maxVal = bottomRight;
+
+            sum += maxVal;
+        }
+    }
+
+    return sum;
+}
