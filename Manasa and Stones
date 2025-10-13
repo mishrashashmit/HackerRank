@@ -1,0 +1,30 @@
+int* stones(int n, int a, int b, int* result_count) {
+        if (n <= 0) {
+         *result_count = 0;
+        return NULL;
+    }
+                            
+    if (a == b) {
+        *result_count = 1;
+        int *res = malloc(sizeof(int));
+        res[0] = (n - 1) * a;
+        return res;
+    }
+                                                                    
+        int small = a < b ? a : b;
+        int large = a < b ? b : a;
+                                                                            
+        *result_count = n;
+        int *res = malloc((*result_count) * sizeof(int));
+        if (!res) {
+        *result_count = 0;
+        return NULL;
+    }                                                                                
+        int start = (n - 1) * small;
+        int diff = large - small;
+                                                                                                                    
+    for (int k = 0; k < n; k++) {
+        res[k] = start + k * diff;
+    }                                                                                                                                 
+    return res;
+}
