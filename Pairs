@@ -1,0 +1,15 @@
+int pairs(int k, vector<int> arr) {
+    unordered_set<int> seen;
+    int count = 0;
+
+    for (int num : arr) {
+        seen.insert(num);
+    }
+
+    for (int num : arr) {
+        if (seen.count(num + k)) {
+            count++;
+        }
+    }
+    return count;
+}
