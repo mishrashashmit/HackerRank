@@ -1,0 +1,26 @@
+int anagram(string s) {
+
+    int n = s.size();
+
+    if (n % 2 != 0) return -1;
+
+    string a = s.substr(0, n / 2);
+    string b = s.substr(n / 2);
+
+    vector<int> freq(26, 0);
+
+    for (char c : a) {
+        freq[c - 'a']++;
+    }
+
+    for (char c : b) {
+        freq[c - 'a']--;
+    }
+
+    int changes = 0;
+    for (int x : freq) {
+        if (x > 0) changes += x;
+    }
+
+    return changes;
+}
